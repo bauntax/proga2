@@ -14,6 +14,22 @@ h1 {
   text-align: center;
   font-style: normal;
   line-height: 1.3;
+  position: relative;
+}
+
+h1::before {
+  content: "✈ ";
+  color: #c2185b;
+}
+
+h1::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 8px auto 0;
+  background: #cfe8d6;
+  border-radius: 2px;
 }
 
 h2 {
@@ -32,12 +48,24 @@ h3 {
 
 a.nav-link {
   font-size: 16px;
-  color: #c2185b;
   text-decoration: none;
+}
+
+a.nav-link:link {
+  color: #c2185b;
+}
+
+a.nav-link:visited {
+  color: #8e0038;
 }
 
 a.nav-link:hover {
   text-decoration: underline;
+  color: #ff4081;
+}
+
+a.nav-link:active {
+  color: #d50000;
 }
 
 
@@ -51,9 +79,7 @@ a.content-link {
   font-style: italic;
 }
 
-/* =========================
-   Списки: UL / OL / DL
-   ========================= */
+
 ul,
 ol {
   margin: 12px 0 16px;
@@ -84,7 +110,7 @@ li::marker {
   font-weight: bold;
 }
 
-/* Визначення (DL) */
+
 dl {
   margin: 14px 0 18px;
   padding: 12px 14px;
@@ -107,9 +133,7 @@ dd {
   color: #2a2a2a;
 }
 
-/* =========================
-   Таблиці
-   ========================= */
+
 table {
   width: 100%;
   margin: 14px 0 22px;
@@ -156,33 +180,73 @@ table img {
   border: 1px solid #e7eef0;
 }
 
-/* =========================
-   Контекстні / дочірні / сусідні селектори
-   ========================= */
 
-/* Контекстний (нащадковий) селектор:
-   стилі застосовуються лише до посилань з класом nav-link,
-   які знаходяться всередині елемента nav */
 nav a.nav-link {
   padding: 0 4px;
 }
 
-/* Дочірній селектор:
-   стиль тільки для тих посилань, які є безпосередніми
-   дітьми навігаційного блоку nav */
+
 nav > a.nav-link {
   text-transform: none;
 }
 
-/* Сусідній селектор:
-   список одразу після h3 отримує трохи менший відступ зверху */
+
 h3 + ol,
 h3 + ul {
   margin-top: 6px;
 }
 
-/* Сусідній селектор для списку визначень:
-   перший dd одразу після dt виглядає трохи щільніше з терміном */
+
 dt + dd {
   margin-top: 2px;
+}
+
+
+.main-wrap {
+  position: relative;
+  max-width: 960px;
+  margin: 16px auto 0;
+  padding: 0 8px;
+}
+
+.main-wrap::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.aside-float {
+  float: left;
+  width: 30%;
+  max-width: 280px;
+  margin: 0 16px 12px 0;
+  padding: 12px 14px;
+  border: 1px solid #cfe8d6;
+  border-radius: 10px;
+  background: #f6fffa;
+  position: relative;
+}
+
+.intro {
+  overflow: hidden;
+}
+
+span.tip {
+  color: #ad1457;
+  font-weight: 600;
+}
+
+.welcome-lead {
+  font-size: 18px;
+  color: #1a472a;
+}
+
+#top-tips li:first-child {
+  font-weight: bold;
+  background: #eafff3;
+}
+
+.services-list li:first-child {
+  font-weight: bold;
+  text-decoration: underline;
 }
