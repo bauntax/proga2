@@ -202,6 +202,8 @@ dt + dd {
 }
 
 
+
+
 .main-wrap {
   position: relative;
   max-width: 960px;
@@ -249,4 +251,19 @@ span.tip {
 .services-list li:first-child {
   font-weight: bold;
   text-decoration: underline;
+}
+
+input[type="text"] {
+  margin: 0 8px 8px 6px;
+  padding: 4px 6px;
+  border: 1px solid #cfe8d6;
+  border-radius: 6px;
+}
+
+button {
+  padding: 6px 10px;
+  border: 1px solid #cfe8d6;
+  border-radius: 6px;
+  background: #f6fffa;
+  cursor: pointer;
 }
