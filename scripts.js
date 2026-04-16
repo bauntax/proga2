@@ -118,3 +118,142 @@ document.addEventListener("DOMContentLoaded", function() {
     sandbox.remove();
   }
 });
+
+
+
+// =========================================================================
+
+function showSecretTip() {
+  document.getElementById('secret-tip').style.display = 'block';
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  
+  var btnHideSecret = document.getElementById('btn-hide-secret');
+  if (btnHideSecret) {
+    // Призначаємо функцію властивості onclick
+    btnHideSecret.onclick = function() {
+      document.getElementById('secret-tip').style.display = 'none';
+    };
+  }
+
+  // Метод addEventListener, різні обробники на одну подію 
+  var btnCheckReady = document.getElementById('btn-check-ready');
+  if (btnCheckReady) {
+    //  Змінює візуальний стан кнопки
+    btnCheckReady.addEventListener('click', function() {
+      this.textContent = "Перевірку пройдено!";
+      this.style.backgroundColor = "#a7d7b4"; // Робимо зеленою
+      this.style.color = "#1f3b2b";
+    });
+    
+    // Виводить повідомлення
+    btnCheckReady.addEventListener('click', function() {
+      alert("Документи в порядку! Ви повністю готові до подорожі.");
+    });
+  }
+
+  var btnVip = document.getElementById('btn-vip');
+  if (btnVip) {
+
+    var vipHandler = {
+      handleEvent: function(event) {
+        var targetBtn = event.currentTarget;
+        
+        // Змінюємо кнопку
+        targetBtn.textContent = "👑 VIP-статус активовано!";
+        targetBtn.style.backgroundColor = "#c2185b";
+        targetBtn.style.color = "white";
+        
+        alert("Вітаємо! Ви отримали знижку 10% на всі тури.");
+
+        targetBtn.removeEventListener('click', this);
+      }
+    };
+
+    // Призначаємо об'єкт як обробник події
+    btnVip.addEventListener('click', vipHandler);
+  }
+
+  // Спливання та делегування 
+  var luggageList = document.getElementById('luggage-list');
+  if (luggageList) {
+    // Замість того, щоб вішати обробник на кожен <li> окремо, 
+    // ми вішаємо ОДИН обробник на батьківський <ul>. 
+    // Завдяки "спливанню", клік по <li> підніметься до <ul>.
+    luggageList.addEventListener('click', function(event) {
+      if (event.target.tagName === 'LI') {
+        // викреслювання
+        event.target.style.textDecoration = "line-through";
+        event.target.style.color = "#8e0038";
+        event.target.style.backgroundColor = "#fce4ec";
+        if (!event.target.textContent.includes("✓")) {
+          event.target.textContent += " ✓ (Зібрано)";
+        }
+      }
+    });
+  }
+
+});
+
+// 2
+
+// =========================================================================
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  // Делегування
+  const list = document.getElementById('priority-list');
+  if (list) {
+    list.onclick = function(event) {
+      let target = event.target;
+      if (target.tagName !== 'LI') return; 
+
+      target.classList.toggle('highlight-item');
+    };
+  }
+
+  // 
+  const menu = document.getElementById('menu-actions');
+  
+  const actionMethods = {
+    makeSurprise: function() {
+      alert("✨ Ви знайшли квиток у бізнес-клас!");
+    },
+    toggleTheme: function() {
+      document.body.style.filter = document.body.style.filter === 'invert(1)' ? 'none' : 'invert(1)';
+    },
+    resetAll: function() {
+      location.reload(); 
+    }
+  };
+
+  if (menu) {
+    menu.onclick = function(event) {
+      let method = event.target.dataset.method;
+   
+      if (method && actionMethods[method]) {
+        actionMethods[method](); 
+      }
+    };
+  }
+
+  // --- 3. ПАТТЕРН "ПОВЕДІНКА" (Behavior) ---
+  // Ми вішаємо один обробник на весь документ! 
+  // Тепер будь-який елемент з data-behavior отримає свою функцію.
+  document.addEventListener('click', function(event) {
+    let behavior = event.target.dataset.behavior;
+
+    if (behavior === 'counter') {
+      // Поведінка: Лічильник
+      let count = parseInt(event.target.textContent.match(/\d+/)) || 0;
+      event.target.textContent = `Лічильник кліків: ${++count}`;
+    }
+
+    if (behavior === 'toggle-hint') {
+      // Поведінка: Показати підказку
+      alert(event.target.dataset.hint);
+    }
+  });
+
+});

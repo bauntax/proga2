@@ -99,6 +99,34 @@
     </tbody>
   </table>
 
+<!--  -->
+<h2>🎒 Інтерактивна зона мандрівника</h2>
+
+  <p>
+    <button type="button" onclick="showSecretTip()">Дізнатись секрет</button>
+    <button type="button" id="btn-hide-secret">Сховати секрет</button>
+  </p>
+  <p id="secret-tip" style="display: none; color: #c2185b; font-weight: bold; background: #ffe3ee; padding: 10px; border-radius: 5px;">
+    Секрет: Ніколи не кладіть всі гроші та документи в одну сумку!
+  </p>
+
+  <p>
+    <button type="button" id="btn-check-ready">Перевірити готовність до поїздки</button>
+  </p>
+
+  <p>
+    <button type="button" id="btn-vip">Отримати VIP-статус (Діє лише 1 раз)</button>
+  </p>
+
+  <h3>Список речей у валізу </h3>
+  <p><em>Клікніть на річ, щоб відмітити її як зібрану:</em></p>
+  <ul id="luggage-list" style="cursor: pointer;">
+    <li>Паспорт і квитки</li>
+    <li>Зарядний пристрій</li>
+    <li>Аптечка</li>
+    <li>Сонцезахисні окуляри</li>
+  </ul>
+
   <p><a href="#top-tips">До списку порад</a> | <a href="contacts.html#email">Написати нам</a> | <a href="https://www.lonelyplanet.com" target="_blank">Туристичний гід у мережі</a></p>
   <script src="scripts.js"></script>
 </body>

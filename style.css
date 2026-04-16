@@ -267,3 +267,30 @@ button {
   background: #f6fffa;
   cursor: pointer;
 }
+.dashboard-zone {
+  float: left;      /* Делаем блок боковой колонкой */
+  width: 30%;       /* Такая же ширина, как у облака советов */
+  clear: left;      /* Магия! Это заставляет блок встать ПОД верхним облаком */
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #cfe8d6;
+  border-radius: 12px; /* Закругляем углы, как у облака */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Легкая тень для эффекта облака */
+  box-sizing: border-box; /* Чтобы отступы не распирали блок */
+}
+
+/* Немного уменьшим шрифты, чтобы в узком облаке всё влезло */
+.dashboard-zone h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.dashboard-zone button {
+  display: block;   /* Кнопки теперь будут одна под другой */
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 13px;
+  padding: 8px;
+  cursor: pointer;
+}
