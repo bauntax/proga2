@@ -196,9 +196,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-// 2
-
-// =========================================================================
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -238,9 +235,8 @@ document.addEventListener("DOMContentLoaded", function() {
     };
   }
 
-  // --- 3. ПАТТЕРН "ПОВЕДІНКА" (Behavior) ---
-  // Ми вішаємо один обробник на весь документ! 
-  // Тепер будь-який елемент з data-behavior отримає свою функцію.
+  
+  //
   document.addEventListener('click', function(event) {
     let behavior = event.target.dataset.behavior;
 
@@ -256,4 +252,98 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
+});
+
+
+
+   // --- 1: mouseover, mouseout, event.target, event.relatedTarget
+
+// Обробник наведення на зображення
+document.addEventListener('mouseover', function(event) {
+  if (event.target.tagName === 'IMG') {
+    let target = event.target; 
+    let related = event.relatedTarget; 
+
+    // Змінюємо стиль 
+    target.style.outline = "5px solid #ff4081"; 
+    target.style.transform = "scale(1.05)";
+    target.style.transition = "all 0.3s ease";
+    
+    console.log("Курсор перейшов з:", related ? related.tagName : "поза вікном", "на:", target.tagName);
+  }
+});
+
+// Обробник виходу миші з зображення
+document.addEventListener('mouseout', function(event) {
+  if (event.target.tagName === 'IMG') {
+    let target = event.target;
+    
+    // Повертаємо стиль назад
+    target.style.outline = "none";
+    target.style.transform = "scale(1)";
+  }
+});
+
+
+// --- ЗАВДАННЯ 2: Drag-and-drop (mousedown, mousemove, mouseup) 
+
+// Створюємо зону кошика 
+const dropZone = document.createElement('div');
+dropZone.id = 'travel-wishlist';
+dropZone.innerHTML = `<h3>🎒 Мій список</h3><ul id="wishlist-items"></ul>`;
+Object.assign(dropZone.style, {
+  position: 'fixed', top: '100px', right: '20px', width: '200px',
+  minHeight: '100px', border: '2px dashed #a7d7b4', backgroundColor: '#f6fffa',
+  padding: '10px', zIndex: '1000', borderRadius: '10px'
+});
+document.body.append(dropZone);
+
+// Логіка перетягування для всіх фото
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('mousedown', function(event) {
+    event.preventDefault(); 
+
+    // Створюємо клона для візуального перетягування
+    let shiftX = event.clientX - img.getBoundingClientRect().left;
+    let shiftY = event.clientY - img.getBoundingClientRect().top;
+
+    let clone = img.cloneNode(true);
+    clone.style.position = 'absolute';
+    clone.style.zIndex = 1000;
+    clone.style.width = '100px'; // Робимо меншим при перетягуванні
+    clone.style.opacity = '0.7';
+    document.body.append(clone);
+
+    function moveAt(pageX, pageY) {
+      clone.style.left = pageX - shiftX + 'px';
+      clone.style.top = pageY - shiftY + 'px';
+    }
+
+    function onMouseMove(event) {
+      moveAt(event.pageX, event.pageY);
+    }
+
+    //  (mousemove)
+    document.addEventListener('mousemove', onMouseMove);
+
+    // Закінчення перетягування 
+    document.addEventListener('mouseup', function onMouseUp(e) {
+      document.removeEventListener('mousemove', onMouseMove);
+      
+      // Перевіряємо
+      let rect = dropZone.getBoundingClientRect();
+      if (e.clientX > rect.left && e.clientX < rect.right &&
+          e.clientY > rect.top && e.clientY < rect.bottom) {
+          
+          let li = document.createElement('li');
+          li.textContent = "📍 " + (img.alt || "Країна"); // Беремо назву з alt
+          document.getElementById('wishlist-items').append(li);
+      }
+
+      clone.remove();
+      document.removeEventListener('mouseup', onMouseUp);
+    });
+  });
+
+  img.ondragstart = function() { return false; }; // Вимикаємо стандартний drag
 });
